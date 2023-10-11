@@ -6,7 +6,7 @@
 /*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:29 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/06 20:20:33 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/11 20:38:09 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,9 @@
 
 # include <stdarg.h>
 # include <unistd.h>
+
+int	ft_printchar(char c);
+int	ft_printstr(char *str);
+int	ft_printnbr(int nbr);
 
 #endif

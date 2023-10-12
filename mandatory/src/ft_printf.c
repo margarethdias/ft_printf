@@ -6,7 +6,7 @@
 /*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:23 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/11 21:38:57 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/11 22:05:46 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ int	ft_check_format(va_list args, const char *format, const char *flag)
 		len += ft_printnbr(va_arg(args, int));
 	else if (format == 'u')
 		len += ft_printnbr_uns(va_arg(args, unsigned int));
-	else if (format == 'x' || format == 'X')
-		len + = ft_printnbr_hex(va_arg(args, unsigned int));
+	else if (format == 'x')
+		len += ft_printnbr_hex(va_arg(args, unsigned int), HEXABASE);
+	else if (format == 'X');
+		len+= ft_printnbr_hex(va_arg(args), HEXAUPPER)
 	else if (format == 'p')
-		len += ft_printptr((va_arg(args, unsigned long)));
+		len += ft_printptr(va_arg(args, unsigned long), HEXABASE);
 	return (len);
 }
 

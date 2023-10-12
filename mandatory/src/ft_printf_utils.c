@@ -6,7 +6,7 @@
 /*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 19:50:51 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/11 21:37:16 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/11 22:03:50 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,30 @@ int	ft_printnbr_hex(unsigned int hex, char	*base)
 	else if (hex >= 16)
 	{
 		size += ft_putnbr_hex(hex / 16, base);
-		size += ft_printchar(base[hx % 16]);
+		size += ft_printchar(base[hex % 16]);
 	}
 	return (size);
+}
+int	ft_printptr(unsigned long ptr, char *base)
+{
+	int size;
+
+	size = 0;
+	if (ptr == 0 || ((void *)ptr == NULL))
+	{
+		size += write(1, "(nil)", 5);
+		return(size);
+	}
+	if (ptr < 16)
+	{
+		write(1, "0x", 2);
+		size = 2;
+		size += ft_printchar(base[ptr % 16]);
+	}
+	else if(ptr >= 16)
+	{
+		size += ft_putptr(ptr / 16, base);
+		size += ft_printchar(ptr % 16);
+	}
+	return(size);	
 }

@@ -6,11 +6,11 @@
 /*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:23 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/11 20:25:53 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/11 21:38:57 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "includes/ft_printf.h"
 
 int	ft_check_format(va_list args, const char *format, const char *flag)
 {
@@ -24,11 +24,11 @@ int	ft_check_format(va_list args, const char *format, const char *flag)
 	else if (format == 's')
 		len += ft_printstr(va_arg(args, char *));
 	else if (format == 'i' || format == 'd')
-		len += ft_printnbr(va_arg(args, int), flag);
+		len += ft_printnbr(va_arg(args, int));
 	else if (format == 'u')
-		len += ft_printunsigned(va_arg(args, unsigned int));
+		len += ft_printnbr_uns(va_arg(args, unsigned int));
 	else if (format == 'x' || format == 'X')
-		len + = ft_printhex(va_arg(args, unsigned int), format, flag);
+		len + = ft_printnbr_hex(va_arg(args, unsigned int));
 	else if (format == 'p')
 		len += ft_printptr((va_arg(args, unsigned long)));
 	return (len);

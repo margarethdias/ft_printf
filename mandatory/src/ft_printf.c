@@ -3,35 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: meg <meg@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:23 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/12 14:41:07 by meg              ###   ########.fr       */
+/*   Updated: 2023/10/12 16:40:50 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_check_format(va_list args, const char *format, int i)
+int	ft_check_format(va_list args, char format)
 {
 	int	len;
-
+		
 	len = 0;
-	if (format[i] == '%')
+	if (format == '%')
 		len += ft_printchar('%');
-	else if (format[i] == 'c')
+	else if (format == 'c')
 		len += ft_printchar(va_arg(args, int));
-	else if (format[i] == 's')
+	else if (format == 's')
 		len += ft_printstr(va_arg(args, char *));
-	else if (format[i] == 'i' || format[i] == 'd')
+	else if (format == 'i' || format == 'd')
 		len += ft_printnbr(va_arg(args, int));
-	else if (format[i] == 'u')
+	else if (format == 'u')
 		len += ft_printnbr_uns(va_arg(args, unsigned int));
-	else if (format[i] == 'x')
+	else if (format == 'x')
 		len += ft_printnbr_hex(va_arg(args, unsigned int), HEXABASE);
-	else if (format[i] == 'X')
+	else if (format == 'X')
 		len+= ft_printnbr_hex(va_arg(args, unsigned int), HEXAUPPER);
-	else if (format[i] == 'p')
+	else if (format == 'p')
 		len += ft_printptr(va_arg(args, unsigned long), HEXABASE);
 	return (len);
 }
@@ -47,10 +47,10 @@ int	ft_printf(const char *format, ...)
 	va_start(args, format);
 	while (format[i])
 	{
-		if (format[i] == '%' || format[i] != 0)
+		if (format[i] == '%' && format[i + 1] != 0)
 		{
+			len += ft_check_format(args, format[i + 1]);
 			i++;
-			len += ft_check_format(args, format, i);
 		}
 		else
 		{

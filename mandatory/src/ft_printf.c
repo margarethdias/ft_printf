@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: meg <meg@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:23 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/11 22:05:46 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/12 13:15:12 by meg              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_printf.h"
 
-int	ft_check_format(va_list args, const char *format, const char *flag)
+int	ft_check_format(va_list args, const char *format, int i)
 {
 	int	len;
 
@@ -47,11 +47,10 @@ int	ft_printf(const char *format, ...)
 	va_start(args, format);
 	while (format[i])
 	{
-		if (format[i] == '%')
+		if (format[i] == '%' || format[i] != 0)
 		{
-			if (format[i + 1] == '#' || format[i + 1] == ' ' || format[i
-				+ 1] == '+')
-				ft_check_format(va_list args, format[i], format[i + 1])
+			len += ft_check_format(args, format, i);
+			i++;
 		}
 		else
 		{
@@ -63,13 +62,3 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return (len);
 }
-
-// printar:
-
-// c - char
-// s - string
-// d e i - int
-// u - unsigned int
-// p - pointr
-// x || X - hexadecimal
-// % - %

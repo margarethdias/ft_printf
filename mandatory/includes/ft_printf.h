@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: meg <meg@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:29 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/11 21:46:53 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/11 23:46:34 by mdias              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 
 #  define HEXABASE "0123456789ABCDEF"
+#  define HEXAUPPER "0123456789ABCDEF"
 
 int	ft_printchar(char c);
 int	ft_printstr(char *str);

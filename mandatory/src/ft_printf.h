@@ -25,5 +25,6 @@ int	ft_printnbr(int nbr);
 int	ft_printnbr_uns(unsigned int nbr);
 int	ft_printnbr_hex(unsigned int hex, char	*base);
 int	ft_printptr(unsigned long int, char *base);
+int	ft_printf(const char *format, ...);
 
 #endif

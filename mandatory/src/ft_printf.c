@@ -6,32 +6,32 @@
 /*   By: meg <meg@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:23 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/12 13:15:12 by meg              ###   ########.fr       */
+/*   Updated: 2023/10/12 14:41:07 by meg              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
+#include "ft_printf.h"
 
 int	ft_check_format(va_list args, const char *format, int i)
 {
 	int	len;
 
 	len = 0;
-	if (format == '%')
+	if (format[i] == '%')
 		len += ft_printchar('%');
-	else if (format == 'c')
+	else if (format[i] == 'c')
 		len += ft_printchar(va_arg(args, int));
-	else if (format == 's')
+	else if (format[i] == 's')
 		len += ft_printstr(va_arg(args, char *));
-	else if (format == 'i' || format == 'd')
+	else if (format[i] == 'i' || format[i] == 'd')
 		len += ft_printnbr(va_arg(args, int));
-	else if (format == 'u')
+	else if (format[i] == 'u')
 		len += ft_printnbr_uns(va_arg(args, unsigned int));
-	else if (format == 'x')
+	else if (format[i] == 'x')
 		len += ft_printnbr_hex(va_arg(args, unsigned int), HEXABASE);
-	else if (format == 'X');
-		len+= ft_printnbr_hex(va_arg(args), HEXAUPPER)
-	else if (format == 'p')
+	else if (format[i] == 'X')
+		len+= ft_printnbr_hex(va_arg(args, unsigned int), HEXAUPPER);
+	else if (format[i] == 'p')
 		len += ft_printptr(va_arg(args, unsigned long), HEXABASE);
 	return (len);
 }
@@ -49,8 +49,8 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%' || format[i] != 0)
 		{
-			len += ft_check_format(args, format, i);
 			i++;
+			len += ft_check_format(args, format, i);
 		}
 		else
 		{

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:23 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/12 19:58:47 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/12 20:50:13 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf_bonus.h"
 
-int	ft_check_format(va_list args, char format)
+int	ft_check_flags(va_list args, const char format, const char flag)
 {
 	int	len;
 
@@ -24,7 +24,7 @@ int	ft_check_format(va_list args, char format)
 	else if (format == 's')
 		len += ft_printstr(va_arg(args, char *));
 	else if (format == 'i' || format == 'd')
-		len += ft_printnbr(va_arg(args, int));
+		len += ft_printnbr(va_arg(args, int), flag);
 	else if (format == 'u')
 		len += ft_printnbr_uns(va_arg(args, unsigned int));
 	else if (format == 'x')
@@ -51,8 +51,16 @@ int	ft_printf(const char *format, ...)
 			return (len);
 		if (format[i] == '%' && format[i + 1] != 0)
 		{
-			len += ft_check_format(args, format[i + 1]);
-			i++;
+			if (format[i + 1] == '#' || format[i + 1] == ' ' || format[i + 1] == '+')
+			{
+				len += ft_check_flags(args, format[i + 2], format[i + 1]);
+				i += 2;
+			}
+			else
+			{
+				len += ft_check_flags(args, format[i + 1], NO_FLAG);
+				i++;
+			}
 		}
 		else
 		{

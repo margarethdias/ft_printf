@@ -6,19 +6,26 @@
 /*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 20:02:25 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/12 20:02:51 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/13 20:39:49 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
 
-int	ft_printnbr(int nbr)
+int	ft_printnbr(int nbr, const char flag)
 {
 	long int	i;
 	int			size;
 
 	i = nbr;
 	size = 0;
+	if (flag == ' ' || flag == '+')
+	{
+		if (i >= 0 && flag == ' ')
+			size += ft_printchar(' ');
+		if (i >= 0 && flag == '+')
+			size += ft_printchar('+');
+	}
 	if (i < 0)
 	{
 		ft_printchar('-');
@@ -26,7 +33,7 @@ int	ft_printnbr(int nbr)
 		size++;
 	}
 	if (i >= 10)
-		size += ft_printnbr(i / 10);
+		size += ft_printnbr(i / 10, NO_FLAG);
 	size += ft_printchar(i % 10 + '0');
 	return (size);
 }
@@ -42,6 +49,17 @@ int	ft_printnbr_uns(unsigned int nbr)
 	return (size);
 }
 
+int ft_handle_hash(const char format, const char flag)
+{
+	int size;
+	
+	size = 0;
+	if (flag == '#')
+		if (format == 'x')
+			size += write(1, "0x", 2);
+		if (format == 'X')
+			size += write(1, "0X", 2);
+}
 int	ft_printnbr_hex(unsigned int hex, char *base)
 {
 	int	size;

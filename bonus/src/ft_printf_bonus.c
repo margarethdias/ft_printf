@@ -6,7 +6,7 @@
 /*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:23 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/12 20:50:13 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/13 20:13:31 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	ft_check_flags(va_list args, const char format, const char flag)
 	else if (format == 'u')
 		len += ft_printnbr_uns(va_arg(args, unsigned int));
 	else if (format == 'x')
-		len += ft_printnbr_hex(va_arg(args, unsigned int), HEXABASE);
+		len += ft_printnbr_hex(va_arg(args, unsigned int), HEXABASE, flag);
 	else if (format == 'X')
-		len += ft_printnbr_hex(va_arg(args, unsigned int), HEXAUPPER);
+		len += ft_printnbr_hex(va_arg(args, unsigned int), HEXAUPPER, flag);
 	else if (format == 'p')
 		len += ft_printptr(va_arg(args, unsigned long), HEXABASE);
 	return (len);
@@ -51,7 +51,8 @@ int	ft_printf(const char *format, ...)
 			return (len);
 		if (format[i] == '%' && format[i + 1] != 0)
 		{
-			if (format[i + 1] == '#' || format[i + 1] == ' ' || format[i + 1] == '+')
+			if (format[i + 1] == '#' || format[i + 1] == ' ' 
+				|| format[i + 1] == '+')
 			{
 				len += ft_check_flags(args, format[i + 2], format[i + 1]);
 				i += 2;
@@ -63,10 +64,7 @@ int	ft_printf(const char *format, ...)
 			}
 		}
 		else
-		{
-			ft_printchar(format[i]);
-			len++;
-		}
+			len += ft_printchar(format[i]);
 		i++;
 	}
 	va_end(args);

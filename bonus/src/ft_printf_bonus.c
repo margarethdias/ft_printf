@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: meg <meg@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:23 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/13 20:13:31 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/14 20:19:16 by meg              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
+
+int ft_handle_hash(const char nbr, const char format, const char flag)
+{
+	int size;
+	
+	size = 0;
+	if (flag == '#' && nbr != 0)
+		if (format == 'x')
+			size += write(1, "0x", 2);
+		if (format == 'X')
+			size += write(1, "0X", 2);
+	if (format == 'x')
+		size += ft_printnbr_hex(nbr, HEXABASE);
+	if (format == 'X')
+		size += ft_printnbr_hex(nbr, HEXAUPPER);
+	return (size);
+}
 
 int	ft_check_flags(va_list args, const char format, const char flag)
 {
@@ -28,9 +45,9 @@ int	ft_check_flags(va_list args, const char format, const char flag)
 	else if (format == 'u')
 		len += ft_printnbr_uns(va_arg(args, unsigned int));
 	else if (format == 'x')
-		len += ft_printnbr_hex(va_arg(args, unsigned int), HEXABASE, flag);
+		len += ft_handle_hash(va_arg(args, unsigned int), format, flag);
 	else if (format == 'X')
-		len += ft_printnbr_hex(va_arg(args, unsigned int), HEXAUPPER, flag);
+		len += ft_handle_hash(va_arg(args, unsigned int), format, flag);
 	else if (format == 'p')
 		len += ft_printptr(va_arg(args, unsigned long), HEXABASE);
 	return (len);

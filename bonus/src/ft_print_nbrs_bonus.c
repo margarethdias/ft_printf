@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_nbrs_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: meg <meg@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 20:02:25 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/13 20:39:49 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/14 20:22:25 by meg              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,23 @@ int	ft_printnbr_uns(unsigned int nbr)
 	return (size);
 }
 
-int ft_handle_hash(const char format, const char flag)
+int ft_handle_hash(const char nbr, const char format, char flag)
 {
 	int size;
 	
 	size = 0;
-	if (flag == '#')
+	if (flag == 0)
+		flag = NO_FLAG;
+	if (flag == '#' && nbr != 0)
 		if (format == 'x')
 			size += write(1, "0x", 2);
 		if (format == 'X')
 			size += write(1, "0X", 2);
+	if (format == 'x')
+		size += ft_printnbr_hex(nbr, HEXABASE);
+	if (format == 'X')
+		size += ft_printnbr_hex(nbr, HEXAUPPER);
+	return (size);
 }
 int	ft_printnbr_hex(unsigned int hex, char *base)
 {

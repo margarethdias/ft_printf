@@ -6,22 +6,24 @@
 /*   By: meg <meg@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:23 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/14 20:19:16 by meg              ###   ########.fr       */
+/*   Updated: 2023/10/14 20:30:58 by meg              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
 
-int ft_handle_hash(const char nbr, const char format, const char flag)
+int	ft_handle_hash(const char nbr, const char format, const char flag)
 {
-	int size;
-	
+	int	size;
+
 	size = 0;
 	if (flag == '#' && nbr != 0)
+	{
 		if (format == 'x')
 			size += write(1, "0x", 2);
 		if (format == 'X')
 			size += write(1, "0X", 2);
+	}
 	if (format == 'x')
 		size += ft_printnbr_hex(nbr, HEXABASE);
 	if (format == 'X')

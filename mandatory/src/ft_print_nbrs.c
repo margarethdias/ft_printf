@@ -6,7 +6,7 @@
 /*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 19:51:31 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/12 19:57:47 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/16 16:57:35 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,11 @@ int	ft_printnbr_hex(unsigned int hex, char *base)
 	int	size;
 
 	size = 0;
-	if (hex < 16)
-		size += ft_printchar(base[hex % 16]);
-	else if (hex >= 16)
+	if (hex >= 16)
 	{
 		size += ft_printnbr_hex(hex / 16, base);
-		size += ft_printchar(base[hex % 16]);
 	}
+	size += ft_printchar(base[hex % 16]);
 	return (size);
 }
 

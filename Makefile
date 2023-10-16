@@ -1,30 +1,29 @@
 NAME = libftprintf.a
-
 CFLAGS = -Wall -Wextra -Werror
 
 # Path Definition
 BIN_PATH = ./bin/
-MANDATORY_HEADER_PATH = ./mandatory/includes/
+MANDATORY_HEADER_PATH = ./mandatory/includes/ft_printf.h
 MANDATORY_SOURCES_PATH = ./mandatory/src/
-BONUS_HEADER_PATH = ./bonus/includes/
+BONUS_HEADER_PATH = ./bonus/includes/ft_printf.h
 BONUS_SOURCES_PATH = ./bonus/src/
 
 # Colors Definition
 GREEN = "\033[32m"
 RED = "\033[31m"
-VIOLET = "\033[38;5;208m"
+VIOLATE = "\033[38;5;208m"
 COLOR_LIMITER = "\033[0m"
 
 # Sources Definition
 SOURCES = \
-	ft_printf.c \
-	ft_printf_utils.c \
-	ft_print_nbrs.c \
+		ft_printf.c \
+		ft_printf_utils.c \
+		ft_print_nbrs.c \
 
 BONUS_SOURCES = \
-	ft_printf_bonus.c \
-	ft_print_nbrs_bonus.c \
-	ft_printf_utils_bonus.c \
+		ft_printf_bonus.c \
+		ft_print_nbrs_bonus.c \
+		ft_printf_utils_bonus.c \
 
 # Objects Definition
 OBJECTS = $(addprefix $(BIN_PATH), $(SOURCES:%.c=%.o))
@@ -32,7 +31,7 @@ BONUS_OBJECTS = $(addprefix $(BIN_PATH), $(BONUS_SOURCES:%.c=%.o))
 
 # Verification of Mandatory Files
 PRINTF_MANDATORY = ft_printf.o
-MANDATORY_CHECK = $(shell ar -t $(NAME) $(PRINTF_MANDATORY) 2>&1)
+MANDATORY_CHECK = $(shell ar -t libftprintf.a ft_printf.o 2>&1)
 
 # Verification of Bonus Files
 PRINTF_BONUS = ft_printf_bonus.o
@@ -42,14 +41,15 @@ ifneq ($(BONUS_CHECK), $(PRINTF_BONUS))
 all: $(BIN_PATH) $(NAME)
 endif
 
+
 $(BIN_PATH)%.o: $(MANDATORY_SOURCES_PATH)%.c
 	@echo $(GREEN)[Compiling]$(COLOR_LIMITER) $(notdir $(<))...
 	@$(CC) $(CFLAGS) -c $< -o $@ -I $(MANDATORY_HEADER_PATH)
 
 $(NAME): $(OBJECTS)
-	@echo $(VIOLET) -------------------------------------------- $(COLOR_LIMITER)
-	@echo $(VIOLET)"| libftprintf.a Was Generated Successfully!! |"$(COLOR_LIMITER)
-	@echo $(VIOLET) -------------------------------------------- $(COLOR_LIMITER)
+	@echo $(VIOLATE) -------------------------------------------- $(COLOR_LIMITER)
+	@echo $(VIOLATE)"| libftprintf.a Was Generated Successfully!! |"$(COLOR_LIMITER)
+	@echo $(VIOLATE) -------------------------------------------- $(COLOR_LIMITER)
 	@echo " "
 	@ar rcs $(NAME) $?
 
@@ -57,7 +57,7 @@ $(BIN_PATH):
 	@mkdir -p $(BIN_PATH)
 
 ifeq ($(MANDATORY_CHECK), $(PRINTF_MANDATORY))
-  bonus: fclean
+bonus: fclean
 	@make --no-print-directory \
 	OBJECTS="$(BONUS_OBJECTS)" \
 	MANDATORY_HEADER_PATH="$(BONUS_HEADER_PATH)" \
@@ -76,9 +76,25 @@ clean:
 
 fclean: clean
 	@echo $(RED)[Removing $(notdir $(NAME))...]$(COLOR_LIMITER)
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(LIB_NAME)
 
-re: fclean
-	@make --no-print-directory
+re: fclean all
 
 .PHONY: all clean fclean re bonus
+
+# Just for test (delete later)
+run_m: all
+	@echo $(GREEN) -------------------------------------------- $(COLOR_LIMITER)
+	@echo $(GREEN)"| --------- Runing Mandatory Tests --------- |"$(COLOR_LIMITER)
+	@echo $(GREEN) -------------------------------------------- $(COLOR_LIMITER)
+	@$(CC) $(CFLAGS) tests_mandatory.c $(NAME) -I $(MANDATORY_HEADER_PATH) && ./a.out
+
+run_b: remove bonus
+	@echo $(GREEN) -------------------------------------------- $(COLOR_LIMITER)
+	@echo $(GREEN)"| ----------- Runing Bonus Tests ----------- |"$(COLOR_LIMITER)
+	@echo $(GREEN) -------------------------------------------- $(COLOR_LIMITER)
+	@$(CC) $(CFLAGS) -g3 tests_bonus.c $(NAME) -I $(BONUS_HEADER_PATH) && ./a.out
+
+remove: fclean
+	@echo $(RED)[Removing a.out...]$(COLOR_LIMITER)
+	@rm -f a.out

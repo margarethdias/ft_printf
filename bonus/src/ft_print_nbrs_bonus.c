@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_nbrs_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: meg <meg@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 20:02:25 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/14 20:31:51 by meg              ###   ########.fr       */
+/*   Updated: 2023/10/16 17:13:45 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_bonus.h"
+#include "../includes/ft_printf_bonus.h"
 
 int	ft_printnbr(int nbr, const char flag)
 {

@@ -6,13 +6,13 @@
 /*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:23 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/16 17:13:26 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/17 21:39:42 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf_bonus.h"
 
-int	ft_handle_hash(const char nbr, const char format, const char flag)
+int	ft_handle_hash(unsigned int nbr, const char format, const char flag)
 {
 	int	size;
 
@@ -55,6 +55,20 @@ int	ft_check_flags(va_list args, const char format, const char flag)
 	return (len);
 }
 
+void	handle_format(const char *frmt, int *i, va_list args, int *len)
+{
+	if (frmt[*i + 1] == '#' || frmt[*i + 1] == ' ' || frmt[*i + 1] == '+')
+	{
+		*len += ft_check_flags(args, frmt[*i + 2], frmt[*i + 1]);
+		*i += 2;
+	}
+	else
+	{
+		*len += ft_check_flags(args, frmt[*i + 1], NO_FLAG);
+		(*i)++;
+	}
+}
+
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
@@ -64,24 +78,10 @@ int	ft_printf(const char *format, ...)
 	i = 0;
 	len = 0;
 	va_start(args, format);
-	while (format[i])
+	while (format[i] && (format[i + 1] != 0 || format[i] != '%'))
 	{
-		if (format[i] == 0)
-			return (len);
 		if (format[i] == '%' && format[i + 1] != 0)
-		{
-			if (format[i + 1] == '#' || format[i + 1] == ' ' 
-				|| format[i + 1] == '+')
-			{
-				len += ft_check_flags(args, format[i + 2], format[i + 1]);
-				i += 2;
-			}
-			else
-			{
-				len += ft_check_flags(args, format[i + 1], NO_FLAG);
-				i++;
-			}
-		}
+			handle_format(format, &i, args, &len);
 		else
 			len += ft_printchar(format[i]);
 		i++;

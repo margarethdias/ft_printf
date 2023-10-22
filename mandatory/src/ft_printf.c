@@ -6,7 +6,7 @@
 /*   By: mdias <mdias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:50:23 by mdias             #+#    #+#             */
-/*   Updated: 2023/10/12 19:58:47 by mdias            ###   ########.fr       */
+/*   Updated: 2023/10/22 19:10:25 by mdias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ int	ft_printf(const char *format, ...)
 	i = 0;
 	len = 0;
 	va_start(args, format);
+	if (!format)
+		return (-1);
 	while (format[i])
 	{
-		if (format[i] == 0)
-			return (len);
 		if (format[i] == '%' && format[i + 1] != 0)
 		{
 			len += ft_check_format(args, format[i + 1]);
